@@ -8,7 +8,9 @@ import ListItemText from '@mui/material/ListItemText'
 import cbrLogo from './assets/cbr-logo.svg'
 import colliderLogo from './assets/collider-logo.svg'
 import comicBookLogo from './assets/comicbook-logo.svg'
-
+import movieWebLogo from './assets/movieweb-logo.svg'
+import screenRantLogo from './assets/screenrant-logo.svg'
+import theGamerLogo from './assets/thegamer-logo.svg'
 
 function App() {
   const listSites = [{
@@ -25,7 +27,22 @@ function App() {
     name: 'Comic Book',
     link: 'https://comicbook.com/tag/list-feature/',
     image: comicBookLogo,
-    imageAlt: 'Comic Book Logo'
+    imageAlt: 'Comic Book logo'
+  }, {
+    name: 'Movie Web',
+    link: 'https://movieweb.com/lists/',
+    image: movieWebLogo,
+    imageAlt: 'Movie Web logo'
+  }, {
+    name: 'Screen Rant',
+    link: 'https://screenrant.com/lists/',
+    image: screenRantLogo,
+    imageAlt: 'Screen Rant logo'
+  }, {
+    name: 'The Gamer',
+    link: 'https://www.thegamer.com/category/lists/',
+    image: theGamerLogo,
+    imageAlt: 'The Gamer logo'
   }]
 
   const listItems = listSites.map((site) => {
