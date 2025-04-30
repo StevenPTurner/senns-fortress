@@ -7,39 +7,57 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import cbrLogo from './assets/cbr-logo.svg'
 import colliderLogo from './assets/collider-logo.svg'
-import comicBookLogo from './assets/comicbook-logo.webp'
-
+import comicBookLogo from './assets/comicbook-logo.svg'
 
 
 function App() {
+  const listSites = [{
+    name: 'Comic Book Resources',
+    link: 'https://www.cbr.com/category/lists/',
+    image: cbrLogo,
+    imageAlt: 'CBR logo'
+  }, {
+    name: 'Collider',
+    link: 'https://collider.com/tag/lists/',
+    image: colliderLogo,
+    imageAlt: 'Collider logo'
+  }, {
+    name: 'Comic Book',
+    link: 'https://comicbook.com/tag/list-feature/',
+    image: comicBookLogo,
+    imageAlt: 'Comic Book Logo'
+  }]
+
+  const listItems = listSites.map((site) => {
+    return (
+      <Link href={site.link} color="inherit" underline='none'>
+        <ListItem sx={{
+          bgcolor: 'background.paper',
+          marginBottom: "10px",
+          borderRadius: "25px",
+          '&:hover': {
+            backgroundColor: '#E0E0E0'
+          }
+        }}>
+          <ListItemAvatar sx={{ margin: 1 }}>
+            <Avatar className="logo" sx={{
+              backgroundColor: 'black',
+              padding: 1
+            }}>
+              <img className="please" src={site.image} alt="" />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={site.name} />
+
+        </ListItem>
+      </Link>
+    )
+  })
 
   return (
     <>
       <List>
-        <Link href="https://www.cbr.com/category/lists/">
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar src={cbrLogo} className="logo" alt="CBR logo" />
-            </ListItemAvatar>
-            <ListItemText primary="Comic Book Resources" />
-          </ListItem>
-        </Link>
-        <Link href="https://collider.com/tag/lists/">
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar src={colliderLogo} className="logo" alt="Collider logo" />
-            </ListItemAvatar>
-            <ListItemText primary="Collider" />
-          </ListItem>
-        </Link>
-        <Link href="https://comicbook.com/tag/list-feature/">
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar src={comicBookLogo} className="logo" alt="Comic Book logo" />
-            </ListItemAvatar>
-            <ListItemText primary="Comic Book" />
-          </ListItem>
-        </Link>
+        {listItems}
       </List>
     </>
   )
