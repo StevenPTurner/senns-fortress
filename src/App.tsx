@@ -11,6 +11,7 @@ import comicBookLogo from './assets/comicbook-logo.svg'
 import movieWebLogo from './assets/movieweb-logo.svg'
 import screenRantLogo from './assets/screenrant-logo.svg'
 import theGamerLogo from './assets/thegamer-logo.svg'
+import dualShockersLogo from './assets/dualshockers-logo.svg'
 
 function App() {
   const listSites = [{
@@ -43,6 +44,11 @@ function App() {
     link: 'https://www.thegamer.com/category/lists/',
     image: theGamerLogo,
     imageAlt: 'The Gamer logo'
+  }, {
+    name: 'Dual Shockers',
+    link: 'https://www.dualshockers.com/lists/',
+    image: dualShockersLogo,
+    imageAlt: 'Dual Shockers logo'
   }]
 
   const listItems = listSites.map((site) => {
