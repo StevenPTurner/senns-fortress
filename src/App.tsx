@@ -10,6 +10,9 @@ import ListItemText from '@mui/material/ListItemText'
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import cbrLogo from './assets/cbr-logo.svg'
 import colliderLogo from './assets/collider-logo.svg'
 import comicBookLogo from './assets/comicbook-logo.svg'
@@ -82,18 +85,18 @@ function App() {
       <Link href={site.link} color="inherit" underline='none'>
         <ListItem sx={{
           bgcolor: 'background.paper',
-          marginBottom: "10px",
-          borderRadius: "25px",
+          marginBottom: '10px',
+          borderRadius: '25px',
           '&:hover': {
             backgroundColor: '#E0E0E0'
           }
         }}>
           <ListItemAvatar sx={{ margin: 1 }}>
-            <Avatar className="logo" sx={{
+            <Avatar className='logo' sx={{
               backgroundColor: 'black',
               padding: 1
             }}>
-              <img className="please" src={site.image} alt="" />
+              <img src={site.image} alt={site.imageAlt} />
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={site.name} />
@@ -113,15 +116,25 @@ function App() {
 
   return (
     <>
-      <FormGroup>
-        <FormControlLabel control={
-          <Checkbox
-            defaultChecked
-            checked={hideLowQuality}
-            onChange={handleHideLowQualityChange}
-          />
-        } label="Hide low quality lists" />
-      </FormGroup>
+      <Box sx={{
+        bgcolor: 'background.paper',
+        display: 'flex'
+      }}>
+        <FormControl sx={{
+          margin: "10px 0px 10px 20px"
+        }}>
+          <FormLabel component="legend">Config</FormLabel>
+          <FormGroup>
+            <FormControlLabel control={
+              <Checkbox
+                defaultChecked
+                checked={hideLowQuality}
+                onChange={handleHideLowQualityChange}
+              />
+            } label="Hide low quality lists" />
+          </FormGroup>
+        </FormControl>
+      </Box>
       <List>
         {listItems}
       </List>
