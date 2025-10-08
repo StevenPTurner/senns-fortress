@@ -1,4 +1,3 @@
-
 import './App.css'
 import * as React from 'react';
 import cbrLogo from './assets/cbr-logo.svg'
@@ -11,9 +10,13 @@ import dualShockersLogo from './assets/dualshockers-logo.svg'
 import Site from './types/Site.types';
 import ListCollection from './components/ListCollection';
 import ConfigPanel from './components/ConfigPanel';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
+  const [authenticated, setAuthenticated] = React.useState(false);
+  const [failedLogin, setFailedLogin] = React.useState(false);
 
   const listSites: Site[] = [{
     name: 'Comic Book Resources',
@@ -62,14 +65,43 @@ function App() {
   const filterLowQuality = (site: Site) => {
     return !(site.lowQuality && hideLowQuality);
   };
-  
+
+  const content = () => {
+    if (failedLogin) {
+      return <div>BAD</div>
+    } else if (authenticated) {
+      return <>
+        <ConfigPanel
+          lowQualityListsHidden={hideLowQuality}
+          onLowQualityCheckboxChange={setHideLowQuality} />
+        <ListCollection listSites={listSites.filter(filterLowQuality)} />
+      </>
+    } else {
+      return <GoogleLogin
+        onSuccess={credentialResponse => {
+          console.log(credentialResponse);
+          if (credentialResponse.credential) {
+            const decoded = jwtDecode(credentialResponse.credential);
+            console.log(decoded);
+            const allowedEmails = import.meta.env.VITE_EMAIL_WHITELIST.split(',') || [];
+            //@ts-ignore
+            if (allowedEmails.includes(decoded.email)) {
+              setAuthenticated(true);
+            } else {
+              setFailedLogin(true);
+            }
+          }
+        }}
+        onError={() => {
+          <h2>BAD</h2>
+        }}
+      />
+    }
+  };
+
   return (
     <>
-      <ConfigPanel
-        lowQualityListsHidden={hideLowQuality}
-        onLowQualityCheckboxChange={setHideLowQuality}
-      />
-      <ListCollection listSites={listSites.filter(filterLowQuality)} />
+      {content()}
     </>
   );
 }

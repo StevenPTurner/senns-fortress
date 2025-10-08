@@ -30,6 +30,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Create .env file
+        run: |
+          echo "VITE_EMAIL_WHITELIST=${{ secrets.APPROVED_EMAILS }}" > .env
+          echo "VITE_CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
