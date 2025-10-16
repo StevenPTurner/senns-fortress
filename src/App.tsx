@@ -1,5 +1,12 @@
 import './App.css'
 import * as React from 'react';
+import Site from './types/Site.types';
+import AuthContext from './types/AuthContext.types';
+import TokenPayload from './types/TokenPayload.types';
+import ListCollection from './components/ListCollection';
+import ConfigPanel from './components/ConfigPanel';
+import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 import cbrLogo from './assets/cbr-logo.svg'
 import colliderLogo from './assets/collider-logo.svg'
 import comicBookLogo from './assets/comicbook-logo.svg'
@@ -7,16 +14,14 @@ import movieWebLogo from './assets/movieweb-logo.svg'
 import screenRantLogo from './assets/screenrant-logo.svg'
 import theGamerLogo from './assets/thegamer-logo.svg'
 import dualShockersLogo from './assets/dualshockers-logo.svg'
-import Site from './types/Site.types';
-import ListCollection from './components/ListCollection';
-import ConfigPanel from './components/ConfigPanel';
-import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
 
 function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
-  const [authenticated, setAuthenticated] = React.useState(false);
-  const [failedLogin, setFailedLogin] = React.useState(false);
+  const [authContext, setAuthContext] = React.useState<AuthContext>({
+    state: 'NOT_LOGGED_IN',
+    email: null,
+    token: null
+  });
 
   const listSites: Site[] = [{
     name: 'Comic Book Resources',
@@ -66,42 +71,65 @@ function App() {
     return !(site.lowQuality && hideLowQuality);
   };
 
-  const content = () => {
-    if (failedLogin) {
-      return <div>BAD</div>
-    } else if (authenticated) {
-      return <>
+  const handleSuccessLogin = (credentialResponse: CredentialResponse) => {
+    if (credentialResponse.credential) {
+      const decoded = jwtDecode<TokenPayload>(credentialResponse.credential);
+      const allowedEmails = import.meta.env.VITE_EMAIL_WHITELIST.split(',') || [];
+      if (allowedEmails.includes(decoded.email)) {
+        setAuthContext({
+          state: 'LOGGED_IN',
+          token: credentialResponse.credential,
+          email: decoded.email
+        })
+      } else {
+        setAuthContext({
+          state: 'FAILED_LOGIN',
+          token: null,
+          email: null
+        })
+      }
+    }
+  }
+
+  const failedContent = () => {
+    return <div>BAD</div>
+  }
+
+  const loginButton = () => {
+    return (
+      <GoogleLogin
+        onSuccess={handleSuccessLogin}
+        onError={() => {
+          <h2>BAD</h2>
+        }}
+      />
+    )
+  }
+
+  const sennsFortress = () => {
+    return (
+      <>
         <ConfigPanel
           lowQualityListsHidden={hideLowQuality}
           onLowQualityCheckboxChange={setHideLowQuality} />
         <ListCollection listSites={listSites.filter(filterLowQuality)} />
       </>
-    } else {
-      return <GoogleLogin
-        onSuccess={credentialResponse => {
-          console.log(credentialResponse);
-          if (credentialResponse.credential) {
-            const decoded = jwtDecode(credentialResponse.credential);
-            console.log(decoded);
-            const allowedEmails = import.meta.env.VITE_EMAIL_WHITELIST.split(',') || [];
-            //@ts-ignore
-            if (allowedEmails.includes(decoded.email)) {
-              setAuthenticated(true);
-            } else {
-              setFailedLogin(true);
-            }
-          }
-        }}
-        onError={() => {
-          <h2>BAD</h2>
-        }}
-      />
-    }
-  };
+    )
+  }
 
   return (
     <>
-      {content()}
+      {authContext.state === 'FAILED_LOGIN' && (
+        failedContent()
+      )}
+
+      {authContext.state === 'NOT_LOGGED_IN' && (
+        loginButton()
+      )}
+
+      {authContext.state === 'LOGGED_IN' && (
+        sennsFortress()
+      )}
     </>
   );
 }
