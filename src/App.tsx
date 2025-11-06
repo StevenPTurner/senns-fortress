@@ -14,11 +14,16 @@ import movieWebLogo from './assets/movieweb-logo.svg'
 import screenRantLogo from './assets/screenrant-logo.svg'
 import theGamerLogo from './assets/thegamer-logo.svg'
 import dualShockersLogo from './assets/dualshockers-logo.svg'
+import AppBar from '@mui/material/AppBar';
+import { Tab } from '@mui/material';
+import TabPanel from '@mui/lab/TabPanel';
+import { TabContext, TabList } from '@mui/lab';
 
 function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
+  const [selectedTab, setSelectedTab] = React.useState('1')
   const [authContext, setAuthContext] = React.useState<AuthContext>({
-    state: 'NOT_LOGGED_IN',
+    state: 'LOGGED_IN',
     email: null,
     token: null
   });
@@ -105,14 +110,41 @@ function App() {
       />
     )
   }
+  const onTabChange = (_event: React.SyntheticEvent, value: string) => {
+    setSelectedTab(value)
+  }
 
   const sennsFortress = () => {
     return (
       <>
-        <ConfigPanel
-          lowQualityListsHidden={hideLowQuality}
-          onLowQualityCheckboxChange={setHideLowQuality} />
-        <ListCollection listSites={listSites.filter(filterLowQuality)} />
+        <TabContext value={selectedTab}>
+          <AppBar className='navigation' position="static" sx={{ height: 90 }}>
+            <TabList onChange={onTabChange} sx={{
+              height: '100%',
+              '& .MuiTabs-scroller': {
+                height: '100%', 
+              },
+              '& .MuiTabs-flexContainer': {
+                height: '100%',
+              },
+            }}
+            >
+              <Tab className='tab' label='Lists' value='1' />
+              <Tab className='tab' label='Quizes' value='2' />
+            </TabList>
+          </AppBar>
+
+          <TabPanel value='1'>
+            <ConfigPanel
+              lowQualityListsHidden={hideLowQuality}
+              onLowQualityCheckboxChange={setHideLowQuality} />
+            <ListCollection listSites={listSites.filter(filterLowQuality)} />
+          </TabPanel>
+          <TabPanel value='2'>
+            Thing here
+          </TabPanel>
+
+        </TabContext >
       </>
     )
   }
