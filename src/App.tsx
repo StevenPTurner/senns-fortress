@@ -14,14 +14,10 @@ import movieWebLogo from './assets/movieweb-logo.svg'
 import screenRantLogo from './assets/screenrant-logo.svg'
 import theGamerLogo from './assets/thegamer-logo.svg'
 import dualShockersLogo from './assets/dualshockers-logo.svg'
-import AppBar from '@mui/material/AppBar';
-import { Tab } from '@mui/material';
-import TabPanel from '@mui/lab/TabPanel';
-import { TabContext, TabList } from '@mui/lab';
+import Navigation from './components/Navigation';
 
 function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
-  const [selectedTab, setSelectedTab] = React.useState('1')
   const [authContext, setAuthContext] = React.useState<AuthContext>({
     state: 'LOGGED_IN',
     email: null,
@@ -100,6 +96,17 @@ function App() {
     return <div>BAD</div>
   }
 
+  const listContent = () => {
+    return (
+      <>
+        <ConfigPanel
+          lowQualityListsHidden={hideLowQuality}
+          onLowQualityCheckboxChange={setHideLowQuality} />
+        <ListCollection listSites={listSites.filter(filterLowQuality)} />
+      </>
+    )
+  }
+
   const loginButton = () => {
     return (
       <GoogleLogin
@@ -110,42 +117,23 @@ function App() {
       />
     )
   }
-  const onTabChange = (_event: React.SyntheticEvent, value: string) => {
-    setSelectedTab(value)
-  }
 
   const sennsFortress = () => {
     return (
-      <>
-        <TabContext value={selectedTab}>
-          <AppBar className='navigation' position="static" sx={{ height: 90 }}>
-            <TabList onChange={onTabChange} sx={{
-              height: '100%',
-              '& .MuiTabs-scroller': {
-                height: '100%', 
-              },
-              '& .MuiTabs-flexContainer': {
-                height: '100%',
-              },
-            }}
-            >
-              <Tab className='tab' label='Lists' value='1' />
-              <Tab className='tab' label='Quizes' value='2' />
-            </TabList>
-          </AppBar>
-
-          <TabPanel value='1'>
-            <ConfigPanel
-              lowQualityListsHidden={hideLowQuality}
-              onLowQualityCheckboxChange={setHideLowQuality} />
-            <ListCollection listSites={listSites.filter(filterLowQuality)} />
-          </TabPanel>
-          <TabPanel value='2'>
-            Thing here
-          </TabPanel>
-
-        </TabContext >
-      </>
+      <Navigation navigationTabs={
+        [
+          {
+            label: 'Lists',
+            index: '1',
+            content: listContent()
+          },
+          {
+            label: 'Quiz',
+            index: '2',
+            content: <div>QUIZ</div>
+          }
+        ]
+      } />
     )
   }
 

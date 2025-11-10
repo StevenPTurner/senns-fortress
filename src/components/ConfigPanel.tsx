@@ -7,7 +7,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 interface ConfigPanelProps {
   lowQualityListsHidden: boolean,
-  onLowQualityCheckboxChange: Function
+  onLowQualityCheckboxChange: (checked: boolean) => void;
 }
 
 export default function ConfigPanel({ lowQualityListsHidden, onLowQualityCheckboxChange }: ConfigPanelProps) {
