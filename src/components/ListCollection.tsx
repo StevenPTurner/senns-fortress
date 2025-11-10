@@ -6,11 +6,11 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import Site from '../types/Site.types'
 
-interface listCollectionProps {
+interface ListCollectionProps {
   listSites: Site[]
 }
 
-export default function ListCollection({ listSites }: listCollectionProps) {
+export default function ListCollection({ listSites }: ListCollectionProps) {
   const convertToListItem = (site: Site) => {
     return (
       <Link href={site.link} color="inherit" underline='none'>
