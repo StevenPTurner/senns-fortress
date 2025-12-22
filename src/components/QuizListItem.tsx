@@ -1,26 +1,25 @@
 import React from "react"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import Box from "@mui/material/Box"
 import Site from "../types/Site.types"
 import ListItem from "@mui/material/ListItem"
 import IconButton from "@mui/material/IconButton"
-import ListItemAvatar from "@mui/material/ListItemAvatar"
-import Avatar from "@mui/material/Avatar"
 import ListItemText from "@mui/material/ListItemText"
 import Button from "@mui/material/Button"
 import Collapse from "@mui/material/Collapse";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers";
+import ListLogo from "./ListLogo";
+import ListLaunchButton from "./ListLaunchButton";
 
 
 interface QuizListItemProps {
     quizSite: Site
 }
 
-const showQuizData = (import.meta.env.VITE_SHOW_QUIZ_DATA === "true");
+const showQuizData = (import.meta.env.VITE_SHOW_QUIZ_DATA === 'true');
 
 export default function ListCollection({ quizSite }: QuizListItemProps) {
     const [expanded, setExpanded] = React.useState(false);
@@ -44,36 +43,20 @@ export default function ListCollection({ quizSite }: QuizListItemProps) {
                     </IconButton> : undefined
                 }
             >
-                <ListItemAvatar>
-                    <Avatar
-                        sx={{
-                            backgroundColor: 'black',
-                        }}>
-                        <img
-                            src={quizSite.image}
-                            alt={quizSite.imageAlt}
-                        />
-                    </Avatar>
-                </ListItemAvatar>
+                <ListLogo
+                    imageUrl={quizSite.image}
+                    altText={quizSite.imageAlt}
+                />
                 <ListItemText
                     primary={quizSite.name}
                 />
-                <Button
-                    variant='contained'
-                    color='primary'
-                    href={quizSite.link}
-                    sx={{
-                        minWidth: 'auto',
-                        padding: 1,
-                        mr: 2
-                    }}
-                >
-                    <RocketLaunchIcon />
-                </Button>
+                <ListLaunchButton
+                    launchUrl={quizSite.link}
+                />
             </ListItem>
             <Collapse
                 in={expanded}
-                timeout="auto"
+                timeout='auto'
                 unmountOnExit>
                 <Stack
                     sx={{
@@ -84,20 +67,27 @@ export default function ListCollection({ quizSite }: QuizListItemProps) {
                         paddingBottom: 2
                     }}
                     spacing={1}>
-                    <TextField size='small' label="High score" />
+                    <TextField
+                        size='small'
+                        label='High score'
+                    />
                     <DatePicker
                         slotProps={{
                             textField: { size: 'small' }
                         }}
-                        label="Last played" />
+                        label='Last played' />
                     <DatePicker
                         slotProps={{
                             textField: { size: 'small' }
                         }}
-                        label="Furthest back played" />
-                    <Button variant="contained">Save</Button>
+                        label='Furthest back played' />
+                    <Button
+                        variant='contained'
+                    >
+                        Save
+                    </Button>
                 </Stack>
             </Collapse>
         </Box>
-    )
+    );
 }

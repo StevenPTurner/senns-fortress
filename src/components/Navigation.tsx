@@ -11,43 +11,63 @@ interface NavigationProps {
 }
 
 export default function Navigation({ navigationTabs }: NavigationProps) {
-    const [selectedTab, setSelectedTab] = React.useState('1')
+    const [selectedTab, setSelectedTab] = React.useState('1');
 
     const onTabChange = (_event: React.SyntheticEvent, value: string) => {
-        setSelectedTab(value)
+        setSelectedTab(value);
     }
 
     const createTab = (tab: NavigationTab) => {
-        return <Tab className='tab' label={tab.label} value={tab.index} />;
+        return <Tab
+            className='tab'
+            label={tab.label}
+            value={tab.index}
+        />;
     }
 
     const createTabPanel = (tab: NavigationTab) => {
         return (
-            <TabPanel value={tab.index} sx={{ padding: 2 }}>
+            <TabPanel
+                value={tab.index}
+                sx={{
+                    padding: 2
+                }}
+            >
                 {tab.content}
             </TabPanel>
-        )
+        );
     }
 
-    return (<>
-        <TabContext value={selectedTab}>
-            <AppBar className='navigation' position="static" sx={{ height: 80 }}>
-                <TabList onChange={onTabChange}
+    return (
+        <>
+            <TabContext
+                value={selectedTab}
+            >
+                <AppBar
+                    className='navigation'
+                    position='static'
                     sx={{
-                        height: '100%',
-                        '& .MuiTabs-scroller': {
-                            height: '100%',
-                        },
-                        '& .MuiTabs-flexContainer': {
-                            height: '100%',
-                        },
+                        height: 80
+
                     }}
                 >
-                    {navigationTabs.map(createTab)}
-                </TabList>
-            </AppBar>
-            {navigationTabs.map(createTabPanel)}
-        </TabContext >
-    </>
-    )
+                    <TabList
+                        onChange={onTabChange}
+                        sx={{
+                            height: '100%',
+                            '& .MuiTabs-scroller': {
+                                height: '100%',
+                            },
+                            '& .MuiTabs-flexContainer': {
+                                height: '100%',
+                            },
+                        }}
+                    >
+                        {navigationTabs.map(createTab)}
+                    </TabList>
+                </AppBar>
+                {navigationTabs.map(createTabPanel)}
+            </TabContext >
+        </>
+    );
 }
