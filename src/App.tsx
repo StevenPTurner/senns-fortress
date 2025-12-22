@@ -3,10 +3,6 @@ import * as React from 'react';
 import Site from './types/Site.types';
 import AuthContext from './types/AuthContext.types';
 import TokenPayload from './types/TokenPayload.types';
-import ListCollection from './components/ListCollection';
-import ConfigPanel from './components/ConfigPanel';
-import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
 import cbrLogo from './assets/cbr-logo.svg';
 import colliderLogo from './assets/collider-logo.svg';
 import comicBookLogo from './assets/comicbook-logo.svg';
@@ -14,14 +10,15 @@ import movieWebLogo from './assets/movieweb-logo.svg';
 import screenRantLogo from './assets/screenrant-logo.svg';
 import theGamerLogo from './assets/thegamer-logo.svg';
 import dualShockersLogo from './assets/dualshockers-logo.svg';
-import aniguesserLogo from './assets/aniguesser-logo.png';
+import aniguessrLogo from './assets/aniguessr-logo.png';
 import gamedleLogo from './assets/gamedle-logo.png';
+import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import ListCollection from './components/ListCollection';
+import ConfigPanel from './components/ConfigPanel';
 import Navigation from './components/Navigation';
-import { Avatar, Box, Button, Collapse, Divider, FormControlLabel, FormGroup, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, Stack, Switch, TextField } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import QuizListItem from './components/QuizListItem';
+import List from '@mui/material/List';
 
 function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
@@ -30,9 +27,6 @@ function App() {
     email: null,
     token: null
   });
-  const [expanded, setExpanded] = React.useState(false);
-
-  const showQuizData = (import.meta.env.VITE_SHOW_QUIZ_DATA === "true");
 
   const listSites: Site[] = [{
     name: 'Comic Book Resources',
@@ -78,6 +72,20 @@ function App() {
     lowQuality: false
   }];
 
+  const quizSites: Site[] = [{
+    name: 'Aniguessr',
+    link: 'https://aniguessr.com/',
+    image: aniguessrLogo,
+    imageAlt: 'Aniguessr Logo',
+    lowQuality: false
+  }, {
+    name: 'Gamdle',
+    link: 'https://www.gamedle.wtf/',
+    image: gamedleLogo,
+    imageAlt: 'Gamedle Logo',
+    lowQuality: false
+  }]
+
   const filterLowQuality = (site: Site) => {
     return !(site.lowQuality && hideLowQuality);
   };
@@ -117,78 +125,10 @@ function App() {
     )
   }
 
-  const quizItem = (title: string, image: string, quizSiteUrl: string) => {
-    return (
-      <Box>
-        <ListItem
-          sx={{
-            bgcolor: 'background.paper',
-            display: 'flex',
-            alignItems: 'center',
-            pt: 2,
-            pb: 2,
-            border: 1,
-            borderColor: '#999999'
-          }}
-          secondaryAction={
-            showQuizData ? <IconButton onClick={() => setExpanded(expanded => !expanded)}
-            >
-              {expanded ? <ExpandLess /> : <ExpandMore />}
-            </IconButton> : undefined
-          }
-        >
-          <ListItemAvatar>
-            <Avatar
-              sx={{
-                backgroundColor: 'black',
-              }}>
-              <img src={image} />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary={title} />
-          <Button
-            variant='contained'
-            color='primary'
-            href={quizSiteUrl}
-            sx={{ minWidth: 'auto', 
-              padding: 1, 
-              mr: 2 }}
-          >
-            <RocketLaunchIcon />
-          </Button>
-        </ListItem>
-        <Collapse
-          in={expanded}
-          timeout="auto"
-          unmountOnExit>
-          <Stack
-            sx={{
-              bgcolor: 'background.paper',
-              paddingTop: 2,
-              paddingLeft: 2,
-              paddingRight: 2,
-              paddingBottom: 2
-            }}
-            spacing={1}>
-            <TextField size='small' label="High score" />
-            <DatePicker
-              slotProps={{
-                textField: { size: 'small' }
-              }}
-              label="Last played" />
-            <DatePicker
-              slotProps={{
-                textField: { size: 'small' }
-              }}
-              label="Furthest back played" />
-            <Button variant="contained">Save</Button>
-          </Stack>
-        </Collapse>
-      </Box>
-    );
+  const quizListItem = (quizSite: Site) => {
+    return (<QuizListItem quizSite={quizSite}/>)
   }
-
+  
   const quizContent = () => {
     return (
       <List
@@ -198,13 +138,10 @@ function App() {
           flexDirection: 'column'
         }}
       >
-        {quizItem('Aniguesser', aniguesserLogo, 'https://aniguessr.com/')}
-        {quizItem('Gamedle', gamedleLogo, 'https://www.gamedle.wtf/')}
+        {quizSites.map(quizListItem)}
       </List>
     )
   }
-  // out of adherence for quizzes
-  // send condescending email
 
   const loginButton = () => {
     return (
