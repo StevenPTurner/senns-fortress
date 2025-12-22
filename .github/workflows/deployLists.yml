@@ -34,6 +34,7 @@ jobs:
         run: |
           echo "VITE_EMAIL_WHITELIST=${{ secrets.APPROVED_EMAILS }}" > .env
           echo "VITE_CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env
+          echo "VITE_SHOW_QUIZ_DATA=${{ secrets.FF_SHOW_QUIZ_DATA }}" >> .env
       - name: Set up Node
         uses: actions/setup-node@v4
         with:

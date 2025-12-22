@@ -23,7 +23,7 @@ import List from '@mui/material/List';
 function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
   const [authContext, setAuthContext] = React.useState<AuthContext>({
-    state: 'LOGGED_IN',
+    state: 'NOT_LOGGED_IN',
     email: null,
     token: null
   });
