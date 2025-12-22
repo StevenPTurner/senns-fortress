@@ -11,12 +11,7 @@
   .logo {
     animation: logo-spin infinite 20s linear;
   }
-
-  .quizLogo {
-    
-  }
 }
-
 
 .navigation .tab {
   color: white;
@@ -25,7 +20,6 @@
   font-weight: 400;
   height: 100%
 }
-
 
 .navigation .tab.Mui-selected  {
   color: white;
