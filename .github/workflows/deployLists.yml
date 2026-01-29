@@ -6,7 +6,7 @@ on:
     branches: ['main']
     paths:
       - 'frontend/**'
-      - '.github/workflow/page.yml'
+      - '.github/workflows/page.yml'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Create .env file
         run: |
@@ -45,7 +45,7 @@ jobs:
           echo "VITE_SHOW_QUIZ_DATA=${{ secrets.FF_SHOW_QUIZ_DATA }}" >> .env
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: 'npm'
@@ -61,7 +61,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           # Upload dist folder
           path: 'frontend/dist'
