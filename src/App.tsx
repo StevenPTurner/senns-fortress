@@ -14,11 +14,11 @@ import aniguessrLogo from './assets/aniguessr-logo.png';
 import gamedleLogo from './assets/gamedle-logo.png';
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
-import ListCollection from './components/ListCollection';
 import ConfigPanel from './components/ConfigPanel';
 import Navigation from './components/Navigation';
-import QuizListItem from './components/QuizListItem';
-import List from '@mui/material/List';
+import QuizListItem from './components/lists/QuizListItem';
+import ListListItem from './components/lists/SiteListItem';
+import SiteList from './components/lists/SiteList';
 
 function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
@@ -110,68 +110,62 @@ function App() {
     }
   }
 
-  const failedContent = () => {
-    return <div>BAD</div>
-  }
+  const failedContent = () => (
+    <div>BAD</div>
+  )
 
-  const listContent = () => {
-    return (
-      <>
-        <ConfigPanel
-          lowQualityListsHidden={hideLowQuality}
-          onLowQualityCheckboxChange={setHideLowQuality} />
-        <ListCollection listSites={listSites.filter(filterLowQuality)} />
-      </>
-    )
-  }
+  const listContent = () => (
+    <>
+      <ConfigPanel
+        lowQualityListsHidden={hideLowQuality}
+        onLowQualityCheckboxChange={setHideLowQuality} />
+      <SiteList>
+        {listSites.filter(filterLowQuality).map(site => (
+          <ListListItem
+            key={site.name}
+            listSite={site}
+          />
+        ))}
+      </SiteList>
+    </>
+  );
 
-  const quizListItem = (quizSite: Site) => {
-    return (<QuizListItem quizSite={quizSite}/>)
-  }
-  
-  const quizContent = () => {
-    return (
-      <List
-        sx={{
-          gap: 2,
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        {quizSites.map(quizListItem)}
-      </List>
-    )
-  }
+  const quizContent = () => (
+    <SiteList>
+      {quizSites.map(site => (
+        <QuizListItem
+          key={site.name}
+          quizSite={site}
+        />
+      ))}
+    </SiteList>
+  );
 
-  const loginButton = () => {
-    return (
-      <GoogleLogin
-        onSuccess={handleSuccessLogin}
-        onError={() => {
-          <h2>BAD</h2>
-        }}
-      />
-    )
-  }
+  const loginButton = () => (
+    <GoogleLogin
+      onSuccess={handleSuccessLogin}
+      onError={() => {
+        <h2>BAD</h2>
+      }}
+    />
+  );
 
-  const sennsFortress = () => {
-    return (
-      <Navigation navigationTabs={
-        [
-          {
-            label: 'Lists',
-            index: '1',
-            content: listContent()
-          },
-          {
-            label: 'Quiz',
-            index: '2',
-            content: quizContent()
-          }
-        ]
-      } />
-    )
-  }
+  const sennsFortress = () => (
+    <Navigation
+      navigationTabs={[
+        {
+          label: 'Lists',
+          index: '1',
+          content: listContent()
+        },
+        {
+          label: 'Quiz',
+          index: '2',
+          content: quizContent()
+        }
+      ]}
+    />
+  );
 
   return (
     <>
