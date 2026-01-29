@@ -14,7 +14,7 @@ export default function ListLogo({ imageUrl, altText }: ListLogoProps) {
                     backgroundColor: 'black',
                 }}>
                 <img
-                    src={imageUrl}
+                    src={new URL(`../../assets/${imageUrl}`, import.meta.url).href}
                     alt={altText}
                 />
             </Avatar>
