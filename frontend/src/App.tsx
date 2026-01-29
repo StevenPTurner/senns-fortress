@@ -3,15 +3,6 @@ import * as React from 'react';
 import Site from './types/Site.types';
 import AuthContext from './types/AuthContext.types';
 import TokenPayload from './types/TokenPayload.types';
-import cbrLogo from './assets/cbr-logo.svg';
-import colliderLogo from './assets/collider-logo.svg';
-import comicBookLogo from './assets/comicbook-logo.svg';
-import movieWebLogo from './assets/movieweb-logo.svg';
-import screenRantLogo from './assets/screenrant-logo.svg';
-import theGamerLogo from './assets/thegamer-logo.svg';
-import dualShockersLogo from './assets/dualshockers-logo.svg';
-import aniguessrLogo from './assets/aniguessr-logo.png';
-import gamedleLogo from './assets/gamedle-logo.png';
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import ConfigPanel from './components/ConfigPanel';
@@ -19,69 +10,40 @@ import Navigation from './components/Navigation';
 import QuizListItem from './components/lists/QuizListItem';
 import ListListItem from './components/lists/SiteListItem';
 import SiteList from './components/lists/SiteList';
+import { useEffect } from 'react';
+import { mockListSites } from './mock/mockData';
 
 function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
+  const [listSites, setListSites] = React.useState<Site[]>([]);
   const [authContext, setAuthContext] = React.useState<AuthContext>({
     state: 'NOT_LOGGED_IN',
     email: null,
     token: null
   });
 
-  const listSites: Site[] = [{
-    name: 'Comic Book Resources',
-    link: 'https://www.cbr.com/category/lists/',
-    image: cbrLogo,
-    imageAlt: 'CBR logo',
-    lowQuality: false
-  }, {
-    name: 'Collider',
-    link: 'https://collider.com/tag/lists/',
-    image: colliderLogo,
-    imageAlt: 'Collider logo',
-    lowQuality: false
-  }, {
-    name: 'Comic Book',
-    link: 'https://comicbook.com/tag/list-feature/',
-    image: comicBookLogo,
-    imageAlt: 'Comic Book logo',
-    lowQuality: false
-  }, {
-    name: 'Movie Web',
-    link: 'https://movieweb.com/lists/',
-    image: movieWebLogo,
-    imageAlt: 'Movie Web logo',
-    lowQuality: true
-  }, {
-    name: 'Screen Rant',
-    link: 'https://screenrant.com/lists/',
-    image: screenRantLogo,
-    imageAlt: 'Screen Rant logo',
-    lowQuality: false
-  }, {
-    name: 'The Gamer',
-    link: 'https://www.thegamer.com/category/lists/',
-    image: theGamerLogo,
-    imageAlt: 'The Gamer logo',
-    lowQuality: true
-  }, {
-    name: 'Dual Shockers',
-    link: 'https://www.dualshockers.com/lists/',
-    image: dualShockersLogo,
-    imageAlt: 'Dual Shockers logo',
-    lowQuality: false
-  }];
+  useEffect(() => {
+    if (import.meta.env.VITE_USE_MOCK_DATA === 'true') {
+      setListSites(mockListSites)
+    } else {
+      fetch("/api/list/site")
+        .then(response => response.json())
+        .then((data) => setListSites(data))
+        .catch((error) => console.error(error))
+    }
+  }, []);
+
 
   const quizSites: Site[] = [{
     name: 'Aniguessr',
     link: 'https://aniguessr.com/',
-    image: aniguessrLogo,
+    image: 'aniguessr-logo.png',
     imageAlt: 'Aniguessr Logo',
     lowQuality: false
   }, {
     name: 'Gamdle',
     link: 'https://www.gamedle.wtf/',
-    image: gamedleLogo,
+    image: 'gamedle-logo.png',
     imageAlt: 'Gamedle Logo',
     lowQuality: false
   }]
