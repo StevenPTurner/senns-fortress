@@ -17,7 +17,7 @@ function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
   const [listSites, setListSites] = React.useState<Site[]>([]);
   const [authContext, setAuthContext] = React.useState<AuthContext>({
-    state: 'NOT_LOGGED_IN',
+    state: import.meta.env.VITE_SKIP_LOGIN === 'true' ? 'LOGGED_IN' : 'NOT_LOGGED_IN',
     email: null,
     token: null
   });

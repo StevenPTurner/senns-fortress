@@ -45,6 +45,7 @@ jobs:
           echo "VITE_SHOW_QUIZ_DATA=${{ secrets.FF_SHOW_QUIZ_DATA }}" >> .env
           echo "VITE_ENABLE_MSW=${{ secrets.ENABLE_MSW }}" >> .env
           echo "VITE_USE_MOCK_DATA=${{ secrets.USE_MOCK_DATA}}" >> .env
+          echo "VITE_SKIP_LOGIN=${{ secrets.SKIP_LOGIN}}" >> .env
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
