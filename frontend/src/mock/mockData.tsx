@@ -43,3 +43,17 @@ export const mockListSites: Site[] = [{
     imageAlt: 'Dual Shockers logo',
     lowQuality: false
 }];
+
+export const mockQuizSites: Site[] = [{
+    name: 'Aniguessr_MOCK',
+    link: 'https://aniguessr.com/',
+    image: 'aniguessr-logo.png',
+    imageAlt: 'Aniguessr Logo',
+    lowQuality: false
+}, {
+    name: 'Gamdle_MOCK',
+    link: 'https://www.gamedle.wtf/',
+    image: 'gamedle-logo.png',
+    imageAlt: 'Gamedle Logo',
+    lowQuality: false
+}];

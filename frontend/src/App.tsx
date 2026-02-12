@@ -11,11 +11,12 @@ import QuizListItem from './components/lists/QuizListItem';
 import ListListItem from './components/lists/SiteListItem';
 import SiteList from './components/lists/SiteList';
 import { useEffect } from 'react';
-import { mockListSites } from './mock/mockData';
+import { mockListSites, mockQuizSites } from './mock/mockData';
 
 function App() {
   const [hideLowQuality, setHideLowQuality] = React.useState(true);
   const [listSites, setListSites] = React.useState<Site[]>([]);
+  const [quizSites, setQuizSites] = React.useState<Site[]>([]);
   const [authContext, setAuthContext] = React.useState<AuthContext>({
     state: import.meta.env.VITE_SKIP_LOGIN === 'true' ? 'LOGGED_IN' : 'NOT_LOGGED_IN',
     email: null,
@@ -23,30 +24,25 @@ function App() {
   });
 
   useEffect(() => {
-    if (import.meta.env.VITE_USE_MOCK_DATA === 'true') {
-      setListSites(mockListSites)
+    const useMockData = import.meta.env.VITE_USE_MOCK_DATA === 'true';
+    if (useMockData) {
+      setListSites(mockListSites);
     } else {
       fetch("/api/list/site")
         .then(response => response.json())
         .then((data) => setListSites(data))
-        .catch((error) => console.error(error))
+        .catch((error) => console.error(error));
+    }
+    if (useMockData) {
+      setQuizSites(mockQuizSites);
+    } else {
+      fetch("/api/list/quiz")
+        .then(response => response.json())
+        .then((data) => setQuizSites(data))
+        .catch((error) => console.error(error));
     }
   }, []);
 
-
-  const quizSites: Site[] = [{
-    name: 'Aniguessr',
-    link: 'https://aniguessr.com/',
-    image: 'aniguessr-logo.png',
-    imageAlt: 'Aniguessr Logo',
-    lowQuality: false
-  }, {
-    name: 'Gamdle',
-    link: 'https://www.gamedle.wtf/',
-    image: 'gamedle-logo.png',
-    imageAlt: 'Gamedle Logo',
-    lowQuality: false
-  }]
 
   const filterLowQuality = (site: Site) => {
     return !(site.lowQuality && hideLowQuality);

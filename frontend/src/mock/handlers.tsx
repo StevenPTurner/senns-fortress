@@ -46,4 +46,19 @@ export const handlers = [
             lowQuality: false
         }])
     }),
+    http.get('/api/list/quiz', () => {
+        return HttpResponse.json([{
+            name: 'Aniguessr_MSW',
+            link: 'https://aniguessr.com/',
+            image: 'aniguessr-logo.png',
+            imageAlt: 'Aniguessr Logo',
+            lowQuality: false
+        }, {
+            name: 'Gamdle_MSW',
+            link: 'https://www.gamedle.wtf/',
+            image: 'gamedle-logo.png',
+            imageAlt: 'Gamedle Logo',
+            lowQuality: false
+        }])
+    }),
 ]
