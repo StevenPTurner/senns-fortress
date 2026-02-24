@@ -6,3 +6,7 @@ VALUES (1, 'Comic Book Resources', 'https://www.cbr.com/category/lists/', 'cbr-l
        (5, 'Screen Rant', 'https://screenrant.com/lists/', 'screenrant-logo.svg', 'Screen Rant logo', false),
        (6, 'The Gamer', 'https://www.thegamer.com/category/lists/', 'thegamer-logo.svg', 'The Gamer logo', true),
        (7, 'Dual Shockers', 'https://www.dualshockers.com/lists/', 'dualshockers-logo.svg', 'Dual Shockers logo',false);
+
+INSERT INTO quiz_site(id, name, link, image, image_alt, low_quality)
+VALUES (1, 'AniGuessr', 'https://aniguessr.com/', 'aniguessr-logo.png', 'AniGuessr logo', false),
+       (2, 'Gamedle', 'https://gamedle.wtf/', 'gamedle-logo.png', 'Gamdele logo', false);
