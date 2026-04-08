@@ -2,11 +2,14 @@ import './App.css'
 import * as React from 'react';
 import AuthContext from './types/AuthContext.types';
 import TokenPayload from './types/TokenPayload.types';
-import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
+import { CredentialResponse } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import Navigation from './components/Navigation';
 import QuizSitePage from './pages/QuizSitePage';
 import ListSitePage from './pages/ListSitePage';
+import { useEffect } from 'react';
+
+declare const google: any;
 
 function App() {
   const [authContext, setAuthContext] = React.useState<AuthContext>({
@@ -35,17 +38,25 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id: import.meta.env.VITE_CLIENT_ID,
+      callback: handleSuccessLogin
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "outline", size: "large" }
+    );
+  }, []);
+
   const failedContent = () => (
     <div>BAD</div>
   )
 
   const loginButton = () => (
-    <GoogleLogin
-      onSuccess={handleSuccessLogin}
-      onError={() => {
-        <h2>BAD</h2>
-      }}
-    />
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+      <div id="buttonDiv"></div>
+    </div>
   );
 
   const sennsFortress = () => (
