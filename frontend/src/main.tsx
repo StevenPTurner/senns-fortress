@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { GoogleOAuthProvider } from '@react-oauth/google'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { enGB } from 'date-fns/locale';
 import './index.css'
 import App from './App.tsx'
+import AuthProvider from './auth/authContext.tsx';
 
 async function enableMocking() {
   if (import.meta.env.VITE_ENABLE_MSW !== 'true') {
@@ -25,9 +25,9 @@ enableMocking().then(() => {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
-        <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
+        <AuthProvider>
           <App />
-        </GoogleOAuthProvider>
+        </AuthProvider>
       </LocalizationProvider>
     </StrictMode>,
   )
