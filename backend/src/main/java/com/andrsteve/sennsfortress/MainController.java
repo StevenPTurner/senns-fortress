@@ -1,17 +1,21 @@
 package com.andrsteve.sennsfortress;
 
+import com.andrsteve.sennsfortress.authentication.AuthenticationService;
+import com.andrsteve.sennsfortress.authentication.models.AuthRequest;
+import com.andrsteve.sennsfortress.authentication.models.AuthResponse;
 import com.andrsteve.sennsfortress.listsite.ListSite;
 import com.andrsteve.sennsfortress.listsite.ListSiteRepository;
 import com.andrsteve.sennsfortress.quizsite.QuizSite;
 import com.andrsteve.sennsfortress.quizsite.QuizSiteRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.andrsteve.sennsfortress.authentication.AuthProvider.GOOGLE;
 
 @Controller
 @RequestMapping("/api")
@@ -20,6 +24,7 @@ public class MainController {
 
     private final ListSiteRepository listSiteRepository;
     private final QuizSiteRepository quizSiteRepository;
+    private final AuthenticationService authService;
 
     @GetMapping(path = "/list/site")
     public ResponseEntity<List<ListSite>> findAllListSites(@RequestParam(defaultValue = "false") boolean excludeLowQuality) {
@@ -36,5 +41,13 @@ public class MainController {
     @GetMapping(path = "/health")
     public ResponseEntity<String> health() {
         return ResponseEntity.ok("API is up and running!");
+    }
+
+
+    @PostMapping("/auth/google")
+    public ResponseEntity<AuthResponse> authenticateWithGoogle(@Valid @RequestBody AuthRequest authRequest) {
+        return ResponseEntity.ok(
+                authService.authenticate(GOOGLE, authRequest.getToken())
+        );
     }
 }
