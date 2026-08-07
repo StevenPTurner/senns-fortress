@@ -5,6 +5,7 @@ import Site from "../types/Site.types";
 import { mockListSites } from "../mock/mockData";
 import ConfigPanel from "../components/ConfigPanel";
 import { useAuth } from "../auth/authContext";
+import env from "../lib/EnvReader";
 
 export default function ListSitePage() {
     const [listSites, setListSites] = React.useState<Site[]>([]);
@@ -16,7 +17,7 @@ export default function ListSitePage() {
     };
 
     useEffect(() => {
-        if (import.meta.env.VITE_USE_MOCK_DATA === 'true') {
+        if (env.get('DATA_MODE') === 'LOCAL') {
             setListSites(mockListSites);
         } else {
             fetch("/api/list/site", {

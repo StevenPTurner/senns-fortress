@@ -1,14 +1,42 @@
 import { CredentialResponse } from "@react-oauth/google";
 import { useEffect } from "react";
 import { useAuth } from "../auth/authContext";
+import { jwtDecode } from "jwt-decode";
+import TokenPayload from "../types/TokenPayload.types";
+import env from "../lib/EnvReader";
 
 declare const google: any;
 
 export default function LoginPage() {
-    const { login } = useAuth();
+    const { login, failLogin } = useAuth();
 
     const handleCredentialResponse = (credentialResponse: CredentialResponse) => {
-        fetch('/api/auth/google', {
+        const authMode = env.get('AUTH_MODE');
+        if (authMode === 'LOCAL') {
+            checkEmailsFromToken(credentialResponse);
+        } else if (authMode === 'PROD') {
+            callAuthService(credentialResponse);
+        }
+    };
+
+    const checkEmailsFromToken = (credentialResponse: CredentialResponse) => {
+        if (credentialResponse.credential) {
+            const decoded = jwtDecode<TokenPayload>(credentialResponse.credential);
+            const allowedEmails = env.get('EMAIL_WHITELIST')?.split(',') || [];
+            if (allowedEmails.includes(decoded.email)) {
+                login({
+                    token: credentialResponse.credential,
+                    email: decoded.email
+                });
+            } else {
+                failLogin();
+            }
+        }
+
+    }
+
+    const callAuthService = (credentialResponse: CredentialResponse) => {
+         fetch('/api/auth/google', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,24 +55,13 @@ export default function LoginPage() {
         })
         .then((data) => login({token: data.token,email: data.email}))
         .catch((error) => console.log(error));
-    };
-        // if (credentialResponse.credential) {
-        //     const decoded = jwtDecode<TokenPayload>(credentialResponse.credential);
-        //     const allowedEmails = import.meta.env.VITE_EMAIL_WHITELIST.split(',') || [];
-        //     if (allowedEmails.includes(decoded.email)) {
-        //         login({
-        //             token: credentialResponse.credential,
-        //             email: decoded.email
-        //         });
-        //     } else {
-        //         failLogin();
-        //     }
-        // }
-    // }
+    }
+ 
+    
 
     useEffect(() => {
         google.accounts.id.initialize({
-            client_id: import.meta.env.VITE_CLIENT_ID,
+            client_id: env.get('CLIENT_ID'),
             callback: handleCredentialResponse
         });
         google.accounts.id.renderButton(

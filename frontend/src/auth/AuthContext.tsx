@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import env from "../lib/EnvReader";
 
 interface AuthState {
     token: string | null;
@@ -12,8 +13,9 @@ interface AuthState {
 const AuthContext = createContext<AuthState | null>(null);
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
+    const initalState = env.get('AUTH_MODE') === 'SKIP' ? 'LOGGED_IN' : 'NOT_LOGGED_IN';
     const [token, setToken] = useState<string | null>(null);
-    const [state, setState] = useState<'LOGGED_IN' | 'NOT_LOGGED_IN' | 'FAILED_LOGIN'>('NOT_LOGGED_IN');
+    const [state, setState] = useState<'LOGGED_IN' | 'NOT_LOGGED_IN' | 'FAILED_LOGIN'>(initalState);
     const [email, setEmail] = useState<string | null>(null);
     
     const login = (authState: {token: string, email: string}) => {

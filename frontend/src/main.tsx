@@ -6,9 +6,10 @@ import { enGB } from 'date-fns/locale';
 import './index.css'
 import App from './App.tsx'
 import AuthProvider from './auth/authContext.tsx';
+import env from './lib/EnvReader.tsx';
 
 async function enableMocking() {
-  if (import.meta.env.VITE_ENABLE_MSW !== 'true') {
+  if (env.get('DATA_MODE') !== 'MOCK') {
     return;
   }
 
@@ -16,7 +17,7 @@ async function enableMocking() {
 
   return worker.start({
     serviceWorker: {
-      url: '/senns-fortress/mockServiceWorker.js'
+      url: '/mockServiceWorker.js'
     }
   })
 }

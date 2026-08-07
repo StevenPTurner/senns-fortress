@@ -4,13 +4,14 @@ import SiteList from "../components/lists/SiteList";
 import Site from "../types/Site.types";
 import { mockQuizSites } from "../mock/mockData";
 import { useAuth } from "../auth/authContext";
+import env from "../lib/EnvReader";
 
 export default function QuizSitePage() {
     const [quizSites, setQuizSites] = React.useState<Site[]>([]);
     const { token } = useAuth();
 
     useEffect(() => {
-        if (import.meta.env.VITE_USE_MOCK_DATA === 'true') {
+        if (env.get('DATA_MODE') === 'LOCAL') {
             setQuizSites(mockQuizSites);
         } else {
             fetch("/api/list/quiz", {
