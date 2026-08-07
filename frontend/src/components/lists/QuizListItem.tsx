@@ -13,13 +13,14 @@ import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers";
 import ListLogo from "./ListLogo";
 import ListLaunchButton from "./ListLaunchButton";
+import env from "../../lib/EnvReader"
 
 
 interface QuizListItemProps {
     quizSite: Site
 }
 
-const showQuizData = (import.meta.env.VITE_SHOW_QUIZ_DATA === 'true');
+const showQuizData = (env.isEnabled('SHOW_QUIZ_DATA'));
 
 export default function ListCollection({ quizSite }: QuizListItemProps) {
     const [expanded, setExpanded] = React.useState(false);
