@@ -36,7 +36,8 @@ export default function LoginPage() {
     }
 
     const callAuthService = (credentialResponse: CredentialResponse) => {
-         fetch('/api/auth/google', {
+        const baseUrl = env.get('API_BASE');
+        fetch(`${baseUrl}/auth/google`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

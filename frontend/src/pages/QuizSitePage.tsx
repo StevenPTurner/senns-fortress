@@ -14,7 +14,8 @@ export default function QuizSitePage() {
         if (env.get('DATA_MODE') === 'LOCAL') {
             setQuizSites(mockQuizSites);
         } else {
-            fetch("/api/list/quiz", {
+            const baseUrl = env.get('API_BASE');
+            fetch(`${baseUrl}/list/quiz`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

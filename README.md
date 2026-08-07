@@ -1,4 +1,3 @@
-# Remove need for proxy
 # Add dockerfile for prod
 # Add action to build back end
 # Add compose for prod

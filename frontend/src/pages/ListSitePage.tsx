@@ -20,7 +20,8 @@ export default function ListSitePage() {
         if (env.get('DATA_MODE') === 'LOCAL') {
             setListSites(mockListSites);
         } else {
-            fetch("/api/list/site", {
+            const baseUrl = env.get('API_BASE');
+            fetch(`${baseUrl}/list/site`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
