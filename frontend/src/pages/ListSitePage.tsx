@@ -4,7 +4,7 @@ import ListListItem from '../components/lists/SiteListItem';
 import Site from "../types/Site.types";
 import { mockListSites } from "../mock/mockData";
 import ConfigPanel from "../components/ConfigPanel";
-import { useAuth } from "../auth/authContext";
+import { useAuth } from "../auth/AuthContext";
 import env from "../lib/EnvReader";
 
 export default function ListSitePage() {

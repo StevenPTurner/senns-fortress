@@ -5,7 +5,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { enGB } from 'date-fns/locale';
 import './index.css'
 import App from './App.tsx'
-import AuthProvider from './auth/authContext.tsx';
+import AuthProvider from './auth/AuthContext.tsx';
 import env from './lib/EnvReader.tsx';
 
 async function enableMocking() {

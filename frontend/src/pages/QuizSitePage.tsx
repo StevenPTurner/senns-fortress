@@ -3,7 +3,7 @@ import QuizListItem from "../components/lists/QuizListItem";
 import SiteList from "../components/lists/SiteList";
 import Site from "../types/Site.types";
 import { mockQuizSites } from "../mock/mockData";
-import { useAuth } from "../auth/authContext";
+import { useAuth } from "../auth/AuthContext";
 import env from "../lib/EnvReader";
 
 export default function QuizSitePage() {

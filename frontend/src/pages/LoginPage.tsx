@@ -1,6 +1,6 @@
 import { CredentialResponse } from "@react-oauth/google";
 import { useEffect } from "react";
-import { useAuth } from "../auth/authContext";
+import { useAuth } from "../auth/AuthContext";
 import { jwtDecode } from "jwt-decode";
 import TokenPayload from "../types/TokenPayload.types";
 import env from "../lib/EnvReader";

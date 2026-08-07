@@ -2,7 +2,7 @@ import './App.css'
 import Navigation from './components/Navigation';
 import QuizSitePage from './pages/QuizSitePage';
 import ListSitePage from './pages/ListSitePage';
-import { useAuth } from './auth/authContext';
+import { useAuth } from './auth/AuthContext';
 import LoginPage from './pages/LoginPage';
 
 declare const google: any;
