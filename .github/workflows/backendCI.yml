@@ -7,19 +7,19 @@ on:
       - 'backend/**'
       - '.github/workflows/backendCI.yml'
 
-  env:
-    REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-      permissions:
-        contents: read
-        packages: write
-        attestations: write
-        id-token: write
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
 
     steps:
     - name: Checkout code
