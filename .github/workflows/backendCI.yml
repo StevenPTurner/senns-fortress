@@ -65,3 +65,16 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+
+    - name: Pull and restart containers on production server
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.PROD_HOST }}
+        username: ubuntu
+        key: ${{ secrets.PROD_SSH_KEY }}
+        script: |
+          cd /home/ubuntu/senns-fortress
+          docker compose pull
+          docker compose down
+          docker compose up -d
+          docker compose ps
