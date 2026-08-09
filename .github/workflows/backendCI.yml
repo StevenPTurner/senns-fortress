@@ -7,6 +7,8 @@ on:
       - 'backend/**'
       - '.github/workflows/backendCI.yml'
 
+  workflow_dispatch:
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}

@@ -1,3 +1,1 @@
-- Add compose for prod (half done)
 - Add action to deploy compose
-- Add action to update secrets
