@@ -183,7 +183,7 @@ public class AuthenticationServiceTest {
 
         AuthResponse actualResponse = authenticationService.authenticate(GOOGLE, VALID_GOOGLE_TOKEN);
 
-        String expectedToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1Njc4OSIsImVtYWlsIjoidXNlcjEyMzQ1QG1vY2suY29tIiwibmFtZSI6Im1vY2tVc2VyIiwiaWF0IjoxNzc1MzQ3MjAwLCJpc3MiOiJjYWxsb2Z0aGViYWNrbG9nIiwiZXhwIjoxNzc1NDMzNjAwfQ.kaBkbuK9Uap_vJ8V5h8BNUCtM-WxMLfGrUiFdSN7DaQ";
+        String expectedToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1Njc4OSIsImVtYWlsIjoidXNlcjEyMzQ1QG1vY2suY29tIiwibmFtZSI6Im1vY2tVc2VyIiwiaWF0IjoxNzc1MzQ3MjAwLCJpc3MiOiJzZW5uc2ZvcnRyZXNzIiwiZXhwIjoxNzc1NDMzNjAwfQ.jWxaiksNPiMnQGro0u9fXK8IBGZThmjMhmyHQmzHhbM";
         assertThat(actualResponse, is(AuthResponse.builder()
                 .name("mockUser")
                 .email("user12345@mock.com")

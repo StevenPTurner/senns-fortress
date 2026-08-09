@@ -37,7 +37,7 @@ class JWTProcessorTest {
         assertThat(claims.getSubject(), is("12345"));
         assertThat(claims.get("name"), is("user12345"));
         assertThat(claims.get("email"), is("user12345@main.com"));
-        assertThat(claims.getIssuer(), is("callofthebacklog"));
+        assertThat(claims.getIssuer(), is("sennsfortress"));
         assertThat(claims.getIssuedAt().toInstant(), is(parse("2026-04-05T00:00:00Z")));
         assertThat(claims.getExpiration().toInstant(), is(parse("2026-04-06T00:00:00Z")));
     }
