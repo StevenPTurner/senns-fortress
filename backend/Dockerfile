@@ -14,6 +14,10 @@ RUN ./gradlew clean bootJar --no-daemon
 FROM eclipse-temurin:25-jre
 WORKDIR /app
 
+##Install wget for healthcheck
+USER root
+RUN apt-get update && apt-get install -y wget
+
 RUN useradd -u 2000 springadmin
 USER springadmin
 
