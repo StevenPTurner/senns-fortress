@@ -1,7 +1,7 @@
 services:
   backend:
     container_name: senns-fortress-backend
-    image: ghcr.io/stevenpturner/senns-fortress:latest
+    image: ghcr.io/stevenpturner/senns-fortress:main
     restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: prod

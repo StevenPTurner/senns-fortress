@@ -23,7 +23,9 @@ EOF
 # Install Docker packages
 sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-sudo apt update
+# Give Ubuntu user permissions to docker group
+
+usermod -aG docker ubuntu
 
 #Make project directory
 mkdir -p /home/ubuntu/senns-fortress
