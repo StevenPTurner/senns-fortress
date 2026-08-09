@@ -38,3 +38,4 @@ jobs:
         key: ${{ secrets.PROD_SSH_KEY }}
         source: "production/.env"
         target: "/home/ubuntu/senns-fortress/"
+        strip_components: 1
