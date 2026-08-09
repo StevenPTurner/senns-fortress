@@ -39,3 +39,25 @@ jobs:
         source: "production/.env"
         target: "/home/ubuntu/senns-fortress/"
         strip_components: 1
+      
+    - name: Upload docker-compose.yml
+      uses: appleboy/scp-action@v1
+      with:
+        host: ${{ secrets.PROD_HOST }}
+        username: ubuntu
+        key: ${{ secrets.PROD_SSH_KEY }}
+        source: "production/docker-compose.yml"
+        target: "/home/ubuntu/senns-fortress/"
+        strip_components: 1
+    - name: Pull and restart containers on production server
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.PROD_HOST }}
+        username: ubuntu
+        key: ${{ secrets.PROD_SSH_KEY }}
+        script: |
+          cd /home/ubuntu/senns-fortress
+          docker compose pull
+          docker compose down
+          docker compose up -d
+          docker compose ps
