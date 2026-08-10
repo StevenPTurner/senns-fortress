@@ -1,4 +1,4 @@
-export default interface Site {
+export default interface ListSite {
   name: string,
   link: string,
   image: string,

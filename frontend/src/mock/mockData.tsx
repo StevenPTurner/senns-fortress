@@ -1,4 +1,4 @@
-import Site from '../types/Site.types';
+import Site from '../types/QuizSite.types';
 
 export const mockListSites: Site[] = [{
     name: 'Comic Book Resources_MOCK',
