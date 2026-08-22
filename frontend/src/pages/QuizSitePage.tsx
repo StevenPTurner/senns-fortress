@@ -5,7 +5,7 @@ import QuizSite from "../types/QuizSite.types";
 import { mockQuizSites } from "../mock/mockData";
 import { useAuth } from "../auth/AuthContext";
 import env from "../lib/EnvReader";
-import LoadingList from "../components/lists/LoadingList";
+import LoadingList from "../components/lists/LoadingList/LoadingList";
 
 export default function QuizSitePage() {
     const [quizSites, setQuizSites] = React.useState<QuizSite[]>([]);

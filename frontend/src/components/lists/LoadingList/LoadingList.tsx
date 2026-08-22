@@ -1,6 +1,6 @@
-import SiteList from "./SiteList";
+import SiteList from "../SiteList";
 import Box from "@mui/material/Box";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "../../LoadingSpinner";
 import LoadingListItem from "./LoadingListItem";
 
 

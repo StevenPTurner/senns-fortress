@@ -6,7 +6,7 @@ import ConfigPanel from "../components/ConfigPanel";
 import { useAuth } from "../auth/AuthContext";
 import env from "../lib/EnvReader";
 import ListSite from "../types/ListSite.types";
-import LoadingList from "../components/lists/LoadingList";
+import LoadingList from "../components/lists/LoadingList/LoadingList";
 
 export default function ListSitePage() {
     const [listSites, setListSites] = React.useState<ListSite[]>([]);
