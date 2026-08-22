@@ -35,6 +35,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         setState('NOT_LOGGED_IN');
         setToken(null);
         setEmail(null);
+        sessionStorage.removeItem('loginToken');
     }
 
     const failLogin = () => {
