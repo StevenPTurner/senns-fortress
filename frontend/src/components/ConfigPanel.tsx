@@ -31,7 +31,6 @@ export default function ConfigPanel({ lowQualityListsHidden, onLowQualityCheckbo
         <FormGroup>
           <FormControlLabel control={
             <Checkbox
-              defaultChecked
               checked={lowQualityListsHidden}
               onChange={handleHideLowQualityChange}
               disabled={disabled}

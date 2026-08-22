@@ -32,6 +32,7 @@ export default function Navigation({ navigationTabs }: NavigationProps) {
         return (
             <TabPanel
                 value={tab.index}
+                key={`${tab.index}${tab.label}`}
                 sx={{
                     padding: 2
                 }}
