@@ -1,14 +1,15 @@
 import './App.css'
+import { useAuth } from './auth/AuthContext';
 import Navigation from './components/Navigation';
 import QuizSitePage from './pages/QuizSitePage';
 import ListSitePage from './pages/ListSitePage';
-import { useAuth } from './auth/AuthContext';
 import LoginPage from './pages/LoginPage';
+import Notification from './components/Notification';
 
 declare const google: any;
 
 function App() {
-  const { state } = useAuth();
+  const { state, showLoginNotification, setShowLoginNotification } = useAuth();
 
   const failedContent = () => (
     <div>BAD</div>
@@ -37,6 +38,11 @@ function App() {
 
   return (
     <>
+      <Notification
+        open={showLoginNotification}
+        onClose={() => setShowLoginNotification(false)}
+        message="Login successful!"
+      />
       {state === 'FAILED_LOGIN' && (
         failedContent()
       )}

@@ -11,7 +11,7 @@ declare const google: any;
 
 export default function LoginPage() {
     const { login, failLogin } = useAuth();
-    const [loading, setLoading] = useState<b>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleCredentialResponse = (credentialResponse: CredentialResponse) => {
         const authMode = env.get('AUTH_MODE');
@@ -51,8 +51,8 @@ export default function LoginPage() {
             })
         })
             .then((response) => {
+                setLoading(false);
                 if (response.ok) {
-                    setLoading(false);
                     return response.json();
                 } else {
                     console.log('Login failed');
@@ -81,7 +81,6 @@ export default function LoginPage() {
         );
     }
     return (
-
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <div id="buttonDiv"></div>
         </div>

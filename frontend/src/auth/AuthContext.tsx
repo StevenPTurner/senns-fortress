@@ -8,6 +8,8 @@ interface AuthState {
     login: (authState: {token: string, email: string}) => void;
     logout: () => void;
     failLogin: () => void;
+    showLoginNotification: boolean;
+    setShowLoginNotification: (show: boolean) => void;
 }
 
 const AuthContext = createContext<AuthState | null>(null);
@@ -23,12 +25,14 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         return token ? 'LOGGED_IN' : 'NOT_LOGGED_IN';
     });
     const [email, setEmail] = useState<string | null>(null);
+    const [showLoginNotification, setShowLoginNotification] = useState(false);
 
     const login = (authState: {token: string, email: string}) => {
         setState('LOGGED_IN');
         setToken(authState.token);
         setEmail(authState.email);
         sessionStorage.setItem('loginToken', authState.token);
+        setShowLoginNotification(true);
     }
 
     const logout = () => {
@@ -44,9 +48,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         setEmail(null);
         sessionStorage.removeItem('loginToken');
     }
-
     return (
-        <AuthContext.Provider value={{ token, state, email, login, logout, failLogin }}>
+        <AuthContext.Provider value={{ token, state, email, login, logout, failLogin, showLoginNotification, setShowLoginNotification }}>
             {children}
         </AuthContext.Provider>
     );
