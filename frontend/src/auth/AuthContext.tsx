@@ -11,6 +11,8 @@ interface AuthState {
     showLoginNotification: boolean;
     setShowLoginNotification: (show: boolean) => void;
 }
+const debug = env.isEnabled('DEBUG_LOG');
+const authMode = env.get('AUTH_MODE');
 
 const AuthContext = createContext<AuthState | null>(null);
 
@@ -19,7 +21,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         return sessionStorage.getItem('loginToken');
     });
     const [state, setState] = useState<'LOGGED_IN' | 'NOT_LOGGED_IN' | 'FAILED_LOGIN'>(() => {
-        if (env.get('AUTH_MODE') === 'SKIP') {
+        if (authMode === 'SKIP') {
             return 'LOGGED_IN';
         }
         return token ? 'LOGGED_IN' : 'NOT_LOGGED_IN';
@@ -60,6 +62,8 @@ export function useAuth() {
     if (!context) {
         throw new Error("context must be used within an AuthProvider");
     }
-    console.log(context);
+    if (debug) {
+        console.log(context);
+    }
     return context;
 }
