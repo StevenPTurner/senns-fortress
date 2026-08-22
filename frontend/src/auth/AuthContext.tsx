@@ -13,15 +13,22 @@ interface AuthState {
 const AuthContext = createContext<AuthState | null>(null);
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
-    const initalState = env.get('AUTH_MODE') === 'SKIP' ? 'LOGGED_IN' : 'NOT_LOGGED_IN';
-    const [token, setToken] = useState<string | null>(null);
-    const [state, setState] = useState<'LOGGED_IN' | 'NOT_LOGGED_IN' | 'FAILED_LOGIN'>(initalState);
+    const [token, setToken] = useState<string | null>(() => {
+        return sessionStorage.getItem('loginToken');
+    });
+    const [state, setState] = useState<'LOGGED_IN' | 'NOT_LOGGED_IN' | 'FAILED_LOGIN'>(() => {
+        if (env.get('AUTH_MODE')) {
+            return 'LOGGED_IN';
+        }
+        return token ? 'LOGGED_IN' : 'NOT_LOGGED_IN';
+    });
     const [email, setEmail] = useState<string | null>(null);
-    
+
     const login = (authState: {token: string, email: string}) => {
         setState('LOGGED_IN');
         setToken(authState.token);
         setEmail(authState.email);
+        sessionStorage.setItem('loginToken', authState.token);
     }
 
     const logout = () => {
@@ -34,6 +41,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         setState('FAILED_LOGIN');
         setToken(null);
         setEmail(null);
+        sessionStorage.removeItem('loginToken');
     }
 
     return (

@@ -5,12 +5,15 @@ import AppBar from "@mui/material/AppBar";
 import Tab from "@mui/material/Tab";
 import React from "react";
 import NavigationTab from "../types/NavigationTab.types";
+import { Box, Button, Toolbar } from "@mui/material";
+import { useAuth } from "../auth/AuthContext";
 
 interface NavigationProps {
     navigationTabs: Array<NavigationTab>
 }
 
 export default function Navigation({ navigationTabs }: NavigationProps) {
+    const { logout } = useAuth(); 
     const [selectedTab, setSelectedTab] = React.useState('1');
 
     const onTabChange = (_event: React.SyntheticEvent, value: string) => {
@@ -46,25 +49,33 @@ export default function Navigation({ navigationTabs }: NavigationProps) {
                 <AppBar
                     className='navigation'
                     position='static'
-                    sx={{
-                        height: 80
-
-                    }}
                 >
-                    <TabList
-                        onChange={onTabChange}
+                    <Toolbar
                         sx={{
-                            height: '100%',
-                            '& .MuiTabs-scroller': {
-                                height: '100%',
-                            },
-                            '& .MuiTabs-flexContainer': {
-                                height: '100%',
-                            },
+                            height: 80
                         }}
                     >
-                        {navigationTabs.map(createTab)}
-                    </TabList>
+                        <TabList
+                            onChange={onTabChange}
+                            sx={{
+                                height: '100%',
+                                '& .MuiTabs-scroller': {
+                                    height: '100%',
+                                },
+                                '& .MuiTabs-flexContainer': {
+                                    height: '100%',
+                                },
+                            }}
+                        >
+                            {navigationTabs.map(createTab)}
+                        </TabList>
+                        <Box sx={{ flexGrow: 1 }} />
+                        <Button
+                            onClick={logout}
+                        >
+                            Log Out
+                        </Button>
+                    </Toolbar>
                 </AppBar>
                 {navigationTabs.map(createTabPanel)}
             </TabContext >
