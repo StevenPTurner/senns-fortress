@@ -8,9 +8,10 @@ import FormLabel from '@mui/material/FormLabel';
 interface ConfigPanelProps {
   lowQualityListsHidden: boolean,
   onLowQualityCheckboxChange: (checked: boolean) => void;
+  disabled: boolean
 }
 
-export default function ConfigPanel({ lowQualityListsHidden, onLowQualityCheckboxChange }: ConfigPanelProps) {
+export default function ConfigPanel({ lowQualityListsHidden, onLowQualityCheckboxChange, disabled }: ConfigPanelProps) {
   const handleHideLowQualityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onLowQualityCheckboxChange(event.target.checked);
   }
@@ -33,6 +34,7 @@ export default function ConfigPanel({ lowQualityListsHidden, onLowQualityCheckbo
               defaultChecked
               checked={lowQualityListsHidden}
               onChange={handleHideLowQualityChange}
+              disabled={disabled}
             />
           } label="Hide low quality lists" />
         </FormGroup>

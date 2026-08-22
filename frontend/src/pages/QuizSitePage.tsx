@@ -5,14 +5,18 @@ import QuizSite from "../types/QuizSite.types";
 import { mockQuizSites } from "../mock/mockData";
 import { useAuth } from "../auth/AuthContext";
 import env from "../lib/EnvReader";
+import LoadingList from "../components/lists/LoadingList";
 
 export default function QuizSitePage() {
     const [quizSites, setQuizSites] = React.useState<QuizSite[]>([]);
+    const [loading, setLoading] = React.useState<boolean>(true);
     const { token } = useAuth();
 
     useEffect(() => {
+        setLoading(true);
         if (env.get('DATA_MODE') === 'LOCAL') {
             setQuizSites(mockQuizSites);
+            setLoading(false);
         } else {
             const baseUrl = env.get('API_BASE');
             fetch(`${baseUrl}/list/quiz`, {
@@ -22,16 +26,21 @@ export default function QuizSitePage() {
             })
                 .then(response => response.json())
                 .then((data) => setQuizSites(data))
-                .catch((error) => console.error(error));
+                .catch((error) => console.error(error))
+                .finally(() => setLoading(false));
         }
     }, []);
 
-    return <SiteList>
-        {quizSites.map(site => (
-            <QuizListItem
-                key={site.name}
-                quizSite={site}
-            />
-        ))}
-    </SiteList>
+    return loading ? (
+        <LoadingList />
+    ) : (
+        <SiteList>
+            {quizSites.map(site => (
+                <QuizListItem
+                    key={site.name}
+                    quizSite={site}
+                />
+            ))}
+        </SiteList>
+    );
 }
