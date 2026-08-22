@@ -1,7 +1,10 @@
 import { http, HttpResponse } from 'msw'
+import env from '../lib/EnvReader';
+
+const apiBase = env.get('API_BASE'); 
 
 export const handlers = [
-    http.get('/api/list/site', () => {
+    http.get(`${apiBase}/list/site`, () => {
         return HttpResponse.json([{
             name: 'Comic Book Resources_MSW',
             link: 'https://www.cbr.com/category/lists/',
@@ -46,7 +49,7 @@ export const handlers = [
             lowQuality: false
         }])
     }),
-    http.get('/api/list/quiz', () => {
+    http.get(`${apiBase}/list/quiz`, () => {
         return HttpResponse.json([{
             name: 'Aniguessr_MSW',
             link: 'https://aniguessr.com/',
