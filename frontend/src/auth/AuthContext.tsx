@@ -17,7 +17,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         return sessionStorage.getItem('loginToken');
     });
     const [state, setState] = useState<'LOGGED_IN' | 'NOT_LOGGED_IN' | 'FAILED_LOGIN'>(() => {
-        if (env.get('AUTH_MODE')) {
+        if (env.get('AUTH_MODE') === 'SKIP') {
             return 'LOGGED_IN';
         }
         return token ? 'LOGGED_IN' : 'NOT_LOGGED_IN';
