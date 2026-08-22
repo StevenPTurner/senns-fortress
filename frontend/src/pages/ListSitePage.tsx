@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import SiteList from "../components/lists/SiteList";
 import ListListItem from '../components/lists/SiteListItem';
-import Site from "../types/Site.types";
 import { mockListSites } from "../mock/mockData";
 import ConfigPanel from "../components/ConfigPanel";
 import { useAuth } from "../auth/AuthContext";
 import env from "../lib/EnvReader";
+import ListSite from "../types/ListSite.types";
 
 export default function ListSitePage() {
-    const [listSites, setListSites] = React.useState<Site[]>([]);
+    const [listSites, setListSites] = React.useState<ListSite[]>([]);
     const [hideLowQuality, setHideLowQuality] = React.useState(true);
     const { token } = useAuth();
 
-    const filterLowQuality = (site: Site) => {
+    const filterLowQuality = (site: ListSite) => {
         return !(site.lowQuality && hideLowQuality);
     };
 

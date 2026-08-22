@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import QuizListItem from "../components/lists/QuizListItem";
 import SiteList from "../components/lists/SiteList";
-import Site from "../types/Site.types";
+import QuizSite from "../types/QuizSite.types";
 import { mockQuizSites } from "../mock/mockData";
 import { useAuth } from "../auth/AuthContext";
 import env from "../lib/EnvReader";
 
 export default function QuizSitePage() {
-    const [quizSites, setQuizSites] = React.useState<Site[]>([]);
+    const [quizSites, setQuizSites] = React.useState<QuizSite[]>([]);
     const { token } = useAuth();
 
     useEffect(() => {

@@ -2,7 +2,7 @@ import React from "react"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
 import Box from "@mui/material/Box"
-import Site from "../../types/Site.types"
+import Site from "../../types/QuizSite.types"
 import ListItem from "@mui/material/ListItem"
 import IconButton from "@mui/material/IconButton"
 import ListItemText from "@mui/material/ListItemText"
@@ -71,6 +71,7 @@ export default function ListCollection({ quizSite }: QuizListItemProps) {
                     <TextField
                         size='small'
                         label='High score'
+                        value={quizSite.quizStat.score}
                     />
                     <DatePicker
                         slotProps={{

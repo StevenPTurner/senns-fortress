@@ -18,6 +18,10 @@ INSERT INTO quiz_site(id, name, link, image, image_alt, low_quality)
 VALUES (1, 'AniGuessr', 'https://aniguessr.com/', 'aniguessr-logo.png', 'AniGuessr logo', false),
        (2, 'Gamedle', 'https://gamedle.wtf/', 'gamedle-logo.png', 'Gamdele logo', false);
 
+INSERT INTO quiz_stat(id, quiz_site_id, score )
+VALUES (1, 1, 58500),
+       (2, 2, 1);
+
 SELECT setval(
     pg_get_serial_sequence('users', 'id'),
     (SELECT MAX(id) FROM users)
@@ -36,4 +40,9 @@ SELECT setval(
 SELECT setval(
     pg_get_serial_sequence('quiz_site', 'id'),
     (SELECT MAX(id) FROM quiz_site)
+);
+
+SELECT setval(
+    pg_get_serial_sequence('quiz_stat', 'id'),
+    (SELECT MAX(id) FROM quiz_stat)
 );

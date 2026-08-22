@@ -55,13 +55,19 @@ export const handlers = [
             link: 'https://aniguessr.com/',
             image: 'aniguessr-logo.png',
             imageAlt: 'Aniguessr Logo',
-            lowQuality: false
+            lowQuality: false,
+            quizStat: {
+                score: 10101
+            }
         }, {
             name: 'Gamdle_MSW',
             link: 'https://www.gamedle.wtf/',
             image: 'gamedle-logo.png',
             imageAlt: 'Gamedle Logo',
-            lowQuality: false
+            lowQuality: false,
+            quizStat: {
+                score: 1
+            }
         }])
     }),
 ]
