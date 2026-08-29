@@ -13,7 +13,7 @@
   }
 }
 
-.navigation button {
+.navigation .nav-button {
   color: white;
   font-size: 16px;
   text-transform: none;
@@ -21,12 +21,12 @@
   height: 100%
 }
 
-.navigation button:hover {
+.navigation .nav-button:hover {
   border-color: white;
   background-color: rgba(255,255,255,0.1);
 }
 
-.navigation .tab.Mui-selected {
+.navigation .nav-button.Mui-selected {
   color: white;
   font-size: 16px;
   text-transform: none;

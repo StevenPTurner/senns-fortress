@@ -7,6 +7,7 @@ import './index.css'
 import App from './App.tsx'
 import AuthProvider from './auth/AuthContext.tsx';
 import env from './lib/EnvReader.tsx';
+import { BrowserRouter } from "react-router";
 
 async function enableMocking() {
   if (env.get('DATA_MODE') !== 'MOCK') {
@@ -27,7 +28,9 @@ enableMocking().then(() => {
     <StrictMode>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
         <AuthProvider>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </AuthProvider>
       </LocalizationProvider>
     </StrictMode>,

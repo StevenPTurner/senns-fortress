@@ -1,85 +1,67 @@
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
 import AppBar from "@mui/material/AppBar";
 import Tab from "@mui/material/Tab";
-import React from "react";
 import NavigationTab from "../types/NavigationTab.types";
-import { Box, Button, Toolbar } from "@mui/material";
+import { Box, Button, Tabs, Toolbar } from "@mui/material";
 import { useAuth } from "../auth/AuthContext";
+import { Link } from "react-router";
 
 interface NavigationProps {
+    selectedTab: number
     navigationTabs: Array<NavigationTab>
 }
 
-export default function Navigation({ navigationTabs }: NavigationProps) {
-    const { logout } = useAuth(); 
-    const [selectedTab, setSelectedTab] = React.useState('1');
-
-    const onTabChange = (_event: React.SyntheticEvent, value: string) => {
-        setSelectedTab(value);
-    }
+export default function Navigation({ selectedTab, navigationTabs }: NavigationProps) {
+    const { logout } = useAuth();
 
     const createTab = (tab: NavigationTab) => {
         return <Tab
-            className='tab'
-            label={tab.label}
+            className='nav-button'
             value={tab.index}
+            label={tab.label}
+            component={Link}
+            to={tab.link}
         />;
-    }
-
-    const createTabPanel = (tab: NavigationTab) => {
-        return (
-            <TabPanel
-                value={tab.index}
-                key={`${tab.index}${tab.label}`}
-                sx={{
-                    padding: 2
-                }}
-            >
-                {tab.content}
-            </TabPanel>
-        );
     }
 
     return (
         <>
-            <TabContext
-                value={selectedTab}
+            <AppBar
+                className='navigation'
+                position='static'
             >
-                <AppBar
-                    className='navigation'
-                    position='static'
+                <Toolbar
+                    sx={{
+                        height: 80
+                    }}
                 >
-                    <Toolbar
+                    <Tabs
+                        value={selectedTab}
                         sx={{
-                            height: 80
+                            height: '100%',
+                            '& .MuiTabs-scroller': {
+                                height: '100%',
+                            },
+                            '& .MuiTabs-flexContainer': {
+                                height: '100%',
+                            },
                         }}
                     >
-                        <TabList
-                            onChange={onTabChange}
-                            sx={{
-                                height: '100%',
-                                '& .MuiTabs-scroller': {
-                                    height: '100%',
-                                },
-                                '& .MuiTabs-flexContainer': {
-                                    height: '100%',
-                                },
-                            }}
-                        >
-                            {navigationTabs.map(createTab)}
-                        </TabList>
-                        <Box sx={{ flexGrow: 1 }} />
-                        <Button
-                            onClick={logout}
-                        >
-                            Log Out
-                        </Button>
-                    </Toolbar>
-                </AppBar>
-                {navigationTabs.map(createTabPanel)}
-            </TabContext >
+                        {navigationTabs.map(createTab)}
+                    </Tabs>
+                    <Box
+                        sx={{
+                            flexGrow:
+                                1
+                        }}
+                    />
+                    <Button
+                        className='nav-button'
+                        onClick={logout}
+                    >
+                        Log Out
+                    </Button>
+                </Toolbar>
+            </AppBar>
         </>
     );
 }

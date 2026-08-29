@@ -1,5 +1,5 @@
 export default interface NavigationTab {
-    index: string
+    index: number
     label: string,
-    content: React.ReactNode
+    link: string
 }
