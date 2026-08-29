@@ -1,9 +1,9 @@
 import AppBar from "@mui/material/AppBar";
 import Tab from "@mui/material/Tab";
 import NavigationTab from "../types/NavigationTab.types";
-import { Box, Button, Tabs, Toolbar } from "@mui/material";
-import { useAuth } from "../auth/AuthContext";
+import { Box, Tabs, Toolbar } from "@mui/material";
 import { Link } from "react-router";
+import LogoutButton from "../auth/LogoutButton";
 
 interface NavigationProps {
     selectedTab: number
@@ -11,7 +11,6 @@ interface NavigationProps {
 }
 
 export default function Navigation({ selectedTab, navigationTabs }: NavigationProps) {
-    const { logout } = useAuth();
 
     const createTab = (tab: NavigationTab) => {
         return <Tab
@@ -22,6 +21,7 @@ export default function Navigation({ selectedTab, navigationTabs }: NavigationPr
             to={tab.link}
         />;
     }
+    console.log(selectedTab)
 
     return (
         <>
@@ -50,16 +50,10 @@ export default function Navigation({ selectedTab, navigationTabs }: NavigationPr
                     </Tabs>
                     <Box
                         sx={{
-                            flexGrow:
-                                1
+                            flexGrow: 1
                         }}
                     />
-                    <Button
-                        className='nav-button'
-                        onClick={logout}
-                    >
-                        Log Out
-                    </Button>
+                    <LogoutButton />
                 </Toolbar>
             </AppBar>
         </>
