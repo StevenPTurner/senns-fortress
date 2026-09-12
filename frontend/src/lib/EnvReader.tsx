@@ -6,5 +6,9 @@ function isEnabled(variableName: string) {
     return get(variableName) === 'true'
 }
 
- const env = {get, isEnabled};
+function isLocalDataMode() {
+    return get('DATA_MODE') === 'LOCAL'
+}
+
+ const env = {get, isEnabled, isLocalDataMode};
  export default env;

@@ -1,11 +1,12 @@
 import React, { createContext, useState } from "react";
 import env from "../lib/EnvReader";
+import AuthCredential from "../types/AuthCredential.types";
 
 interface AuthState {
     token: string | null;
     state: 'LOGGED_IN' | 'NOT_LOGGED_IN' | 'FAILED_LOGIN';
     email: string | null;
-    login: (authState: {token: string, email: string}) => void;
+    login: (authCredential: AuthCredential) => void;
     logout: () => void;
     failLogin: () => void;
     showLoginNotification: boolean;
@@ -29,11 +30,11 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     const [email, setEmail] = useState<string | null>(null);
     const [showLoginNotification, setShowLoginNotification] = useState(false);
 
-    const login = (authState: {token: string, email: string}) => {
+    const login = (authCredential: AuthCredential) => {
         setState('LOGGED_IN');
-        setToken(authState.token);
-        setEmail(authState.email);
-        sessionStorage.setItem('loginToken', authState.token);
+        setToken(authCredential.token);
+        setEmail(authCredential.email);
+        sessionStorage.setItem('loginToken', authCredential.token);
         setShowLoginNotification(true);
     }
 
